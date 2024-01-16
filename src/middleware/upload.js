@@ -16,6 +16,6 @@ let storage = multer.diskStorage({
     }
 })
 
-let uploadFile =muulter({storage: storage,fileFilter: imageFilter});
+let uploadFiles = multer({storage: storage,fileFilter: imageFilter});
 
-module.exports = uploadFile;
+module.exports = uploadFiles;
