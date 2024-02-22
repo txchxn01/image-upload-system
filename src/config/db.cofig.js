@@ -1,8 +1,8 @@
 module.exports ={
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "Tx_280525400", 
-    DB:"nodejs_images",
+    PASSWORD: "img1234", 
+    DB:"imgg",
     dialect: "mysql",
     pool:{
         max: 5,

@@ -1,34 +1,36 @@
-const fs = require("fs")
+const fs = require("fs");
 const db = require('../models');
 const Image = db.images;
-const uploadFile =async(req,res)=>{
-    try{
+
+const uploadFiles = async (req, res) => {
+    try {
         console.log(req.file);
 
-        if (req.file == undefined){
-            return res.send("You must select a file")
-
+        if (req.file == undefined) {
+            return res.send("You must select a file. ");
         }
 
-        Image.creat({
+        Image.create({
             type: req.file.mimetype,
-            name:req.file.originalname,
+            name: req.file.originalname,
             data: fs.readFileSync(
-                __basedir + "/resoures/static/assets/uploads/"+req.file.filename
+                __basedir + "/resources/static/assets/uploads/" + req.file.filename
             )
-        }).the((image)=>{
+        }).then((image) => {
             fs.writeFileSync(
-                __basedir + "/resoures/static/assets/temp/"+image.name,image.data
-            )
+                __basedir + "/resources/static/assets/temp/" + image.name, image.data
+            );
             return res.send('File has been uploaded.');
-        })
-    } catch(error){
+        }).catch((error) => {
+            console.log(error);
+            return res.send(`Error when trying to upload images: ${error}`);
+        });
+    } catch (error) {
         console.log(error);
-        return res.send(`Error when trying upload images: ${error}`);
-    
+        return res.send(`Error when trying to upload images: ${error}`);
     }
 }
 
 module.exports = {
-    uploadFile
-}
+    uploadFiles: uploadFiles
+};
